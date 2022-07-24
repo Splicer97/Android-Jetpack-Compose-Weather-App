@@ -5,7 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Card
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +27,9 @@ import com.splicer.androidjetpackcomposeweatherapp.ui.theme.BlueLight
 @Composable
 fun MainScreen() {
     Image(
-        painter = painterResource(id = R.drawable.weather_bg),
+        painter = painterResource(
+            id = R.drawable.weather_bg
+        ),
         contentDescription = "im1",
         modifier = Modifier
             .fillMaxSize()
@@ -36,14 +39,12 @@ fun MainScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(5.dp),
-
-        ) {
+            .padding(5.dp)
+    ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             backgroundColor = BlueLight,
-            elevation = 0.dp,
-            shape = RoundedCornerShape(10.dp)
+            elevation = 0.dp
         ) {
             Column(
                 modifier = Modifier.fillMaxWidth(),
@@ -54,8 +55,11 @@ fun MainScreen() {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        modifier = Modifier.padding(top = 8.dp, start = 8.dp),
                         text = "20 Jun 2022 13:00",
+                        modifier = Modifier.padding(
+                            top = 8.dp,
+                            start = 8.dp
+                        ),
                         style = TextStyle(fontSize = 15.sp),
                         color = Color.White
                     )
@@ -63,12 +67,61 @@ fun MainScreen() {
                         model = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
                         contentDescription = "im2",
                         modifier = Modifier
+                            .padding(
+                                top = 8.dp,
+                                end = 8.dp
+                            )
                             .size(35.dp)
-                            .padding(top = 3.dp, end = 8.dp)
                     )
+                }
+                Text(
+                    text = "Madrid",
+                    style = TextStyle(fontSize = 24.sp),
+                    color = Color.White
+                )
+                Text(
+                    text = "23ºC",
+                    style = TextStyle(fontSize = 65.sp),
+                    color = Color.White
+                )
+                Text(
+                    text = "Sunny",
+                    style = TextStyle(fontSize = 16.sp),
+                    color = Color.White
+                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    IconButton(
+                        onClick = {
+
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_search),
+                            contentDescription = "im3",
+                            tint = Color.White
+                        )
+                    }
+                    Text(
+                        text = "23ºC/12ºC",
+                        style = TextStyle(fontSize = 16.sp),
+                        color = Color.White
+                    )
+                    IconButton(
+                        onClick = {
+
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_sync),
+                            contentDescription = "im4",
+                            tint = Color.White
+                        )
+                    }
                 }
             }
         }
-
     }
 }
