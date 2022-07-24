@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.splicer.androidjetpackcomposeweatherapp.screens.MainScreen
 import com.splicer.androidjetpackcomposeweatherapp.ui.theme.AndroidJetpackComposeWeatherAppTheme
 import org.json.JSONObject
 
@@ -31,13 +32,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AndroidJetpackComposeWeatherAppTheme {
+                MainScreen()
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("London", this)
-                }
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colors.background
+//                ) {
+//                    Greeting("London", this)
+//                }
             }
         }
     }
@@ -81,7 +83,7 @@ fun DefaultPreview() {
     }
 }
 
- fun getData(city: String, state: MutableState<String>, context: Context) {
+fun getData(city: String, state: MutableState<String>, context: Context) {
     val url = "https://api.weatherapi.com/v1/current.json" +
             "?key=$API_KEY&" +
             "q=$city" +
