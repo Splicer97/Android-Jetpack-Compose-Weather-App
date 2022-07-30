@@ -4,6 +4,7 @@ package com.splicer.androidjetpackcomposeweatherapp.screens;
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
 import com.splicer.androidjetpackcomposeweatherapp.R
+import com.splicer.androidjetpackcomposeweatherapp.data.WeatherModel
 import com.splicer.androidjetpackcomposeweatherapp.ui.theme.BlueLight
 import kotlinx.coroutines.launch
 
@@ -148,9 +150,32 @@ fun TabLayout() {
         ) { index ->
             LazyColumn(
                 modifier = Modifier.fillMaxSize()
-            ){
-                items(15){
-                    ListItem()
+            ) {
+                itemsIndexed(
+                    listOf(
+                        WeatherModel(
+                            "London",
+                            "10:00",
+                            "25ºC",
+                            "Sunny",
+                            "//cdn.weatherapi.com/weather/64x64/day/176.png",
+                            "",
+                            "",
+                            ""
+                        ),
+                        WeatherModel(
+                            "London",
+                            "26/07/2022",
+                            "",
+                            "Sunny",
+                            "//cdn.weatherapi.com/weather/64x64/day/176.png",
+                            "26º",
+                            "12º",
+                            "xdfghxdfthxfghxdft"
+                        )
+                    )
+                ) { _, item ->
+                    ListItem(item)
                 }
             }
         }
