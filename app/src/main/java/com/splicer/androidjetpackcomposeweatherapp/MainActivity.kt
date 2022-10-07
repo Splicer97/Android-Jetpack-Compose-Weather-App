@@ -33,7 +33,20 @@ class MainActivity : ComponentActivity() {
                 val daysList = remember {
                     mutableStateOf(listOf<WeatherModel>())
                 }
-                getData("London", this, daysList)
+                val currentDay = remember {
+                    mutableStateOf(WeatherModel(
+                        "",
+                        "",
+                        "0.0",
+                        "",
+                        "",
+                        "0.0",
+                        "0.0",
+                        ""
+                    )
+                    )
+                }
+                getData("London", this, daysList, currentDay)
                 Image(
                     painter = painterResource(
                         id = R.drawable.weather_bg
@@ -45,7 +58,7 @@ class MainActivity : ComponentActivity() {
                     contentScale = ContentScale.FillBounds
                 )
                 Column {
-                    MainCard()
+                    MainCard(currentDay)
                     TabLayout(daysList)
                 }
             }
@@ -53,7 +66,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-private fun getData(city: String, context: Context, daysList: MutableState<List<WeatherModel>>){
+private fun getData(
+    city: String,
+    context: Context,
+    daysList: MutableState<List<WeatherModel>>,
+    currentDay: MutableState<WeatherModel>
+) {
     val url = "https://api.weatherapi.com/v1/forecast.json?key=$API_KEY" +
             "&q=$city" +
             "&days=" +
@@ -63,9 +81,9 @@ private fun getData(city: String, context: Context, daysList: MutableState<List<
     val sRequest = StringRequest(
         Request.Method.GET,
         url,
-        {
-                response ->
+        { response ->
             val list = getWeatherByDays(response)
+            currentDay.value = list[0]
             daysList.value = list
         },
         {
@@ -75,14 +93,14 @@ private fun getData(city: String, context: Context, daysList: MutableState<List<
     queue.add(sRequest)
 }
 
-private fun getWeatherByDays(response: String): List<WeatherModel>{
+private fun getWeatherByDays(response: String): List<WeatherModel> {
     if (response.isEmpty()) return listOf()
     val list = ArrayList<WeatherModel>()
     val mainObject = JSONObject(response)
     val city = mainObject.getJSONObject("location").getString("name")
     val days = mainObject.getJSONObject("forecast").getJSONArray("forecastday")
 
-    for (i in 0 until days.length()){
+    for (i in 0 until days.length()) {
         val item = days[i] as JSONObject
         list.add(
             WeatherModel(

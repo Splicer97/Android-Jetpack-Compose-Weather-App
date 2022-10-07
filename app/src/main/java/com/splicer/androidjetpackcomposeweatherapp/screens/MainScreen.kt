@@ -29,9 +29,8 @@ import com.splicer.androidjetpackcomposeweatherapp.data.WeatherModel
 import com.splicer.androidjetpackcomposeweatherapp.ui.theme.BlueLight
 import kotlinx.coroutines.launch
 
-@Preview(showBackground = true)
 @Composable
-fun MainCard() {
+fun MainCard(currentDay: MutableState<WeatherModel>) {
     Column(
         modifier = Modifier
             .padding(5.dp)
@@ -50,7 +49,7 @@ fun MainCard() {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "20 Jun 2022 13:00",
+                        text = currentDay.value.time,
                         modifier = Modifier.padding(
                             top = 8.dp,
                             start = 8.dp
@@ -59,7 +58,7 @@ fun MainCard() {
                         color = Color.White
                     )
                     AsyncImage(
-                        model = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+                        model = "https:" + currentDay.value.icon,
                         contentDescription = "im2",
                         modifier = Modifier
                             .padding(
@@ -70,17 +69,17 @@ fun MainCard() {
                     )
                 }
                 Text(
-                    text = "Madrid",
+                    text = currentDay.value.city,
                     style = TextStyle(fontSize = 24.sp),
                     color = Color.White
                 )
                 Text(
-                    text = "23ºC",
+                    text = currentDay.value.currentTemp.toFloat().toInt().toString() + "ºC",
                     style = TextStyle(fontSize = 65.sp),
                     color = Color.White
                 )
                 Text(
-                    text = "Sunny",
+                    text = currentDay.value.condition,
                     style = TextStyle(fontSize = 16.sp),
                     color = Color.White
                 )
@@ -100,7 +99,9 @@ fun MainCard() {
                         )
                     }
                     Text(
-                        text = "23ºC/12ºC",
+                        text = "${currentDay.value
+                            .maxTemp.toFloat().toInt()}ºC/${currentDay
+                            .value.minTemp.toFloat().toInt()}ºC",
                         style = TextStyle(fontSize = 16.sp),
                         color = Color.White
                     )
